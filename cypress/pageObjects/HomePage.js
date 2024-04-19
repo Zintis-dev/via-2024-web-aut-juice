@@ -60,4 +60,20 @@ export class HomePage extends BasePage {
   static get reviewSubmitButton() {
     return cy.get("[id='submitButton']");
   }
+
+  static get itemsPerPage() {
+    return cy.get("[id='mat-select-value-1']");
+  }
+
+  static get itemsPerPageMenu() {
+    return cy.get("[id='mat-select-0']");
+  }
+
+  static get itemsPerPageContainer() {
+    return cy.get("[role='option']");
+  }
+
+  static get itemsPerPageValidation() {
+    return cy.get("[class='mat-paginator-range-label']");
+  }
 }

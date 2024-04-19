@@ -113,6 +113,17 @@ describe("Juice-shop scenarios", () => {
         HomePage.reviewButton.click();
         HomePage.reviewContainer.should("contain.text", "Tastes like metal");
       });
+
+      it.only("Validate product card amount", () => {
+        HomePage.itemsPerPage.should("have.text", "12");
+        HomePage.itemsPerPageMenu.click();
+        HomePage.itemsPerPageContainer.contains("24").click();
+        HomePage.itemsPerPage.should("have.text", "24");
+        HomePage.itemsPerPageMenu.click();
+        HomePage.itemsPerPageContainer.contains("36").click();
+        HomePage.itemsPerPageValidation.should("contain.text", "35 of 35");
+      });
+      
     });
 
     // Create scenario - Buy Girlie T-shirt
