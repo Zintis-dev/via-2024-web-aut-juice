@@ -24,4 +24,20 @@ export class HomePage extends BasePage {
   static get loginButton() {
     return cy.get("[id='navbarLoginButton']");
   }
+
+  static get searchButton() {
+    return cy.get("[id='searchQuery']");
+  }
+
+  static get searchField() {
+    return cy.get("[id='mat-input-0']");
+  }
+
+  static get searchedProductList() {
+    return cy.get("[class='mat-grid-list']");
+  }
+
+  static get selectedProductInformation() {
+    return cy.get("[class='mat-dialog-content']");
+  }
 }
