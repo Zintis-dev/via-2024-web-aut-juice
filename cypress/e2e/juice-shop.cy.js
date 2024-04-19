@@ -1,4 +1,5 @@
 import { HomePage } from "../pageObjects/HomePage";
+import { LoginPage } from "../pageObjects/LoginPage";
 
 describe("Juice-shop scenarios", () => {
   context("Without auto login", () => {
@@ -8,14 +9,14 @@ describe("Juice-shop scenarios", () => {
       HomePage.meWantItButton.click();
     });
 
-    it("Login", () => {
-      // Click Account button
-      // Click Login button
-      // Set email value to "demo"
-      // Set password value to "demo"
-      // Click Log in
-      // Click Account button
-      // Validate that "demo" account name appears in the menu section
+    it.only("Login", () => {
+      HomePage.accountButton.click();
+      HomePage.loginButton.click();
+      LoginPage.emailField.type("demo");
+      LoginPage.passwordField.type("demo");
+      LoginPage.loginButton.click();
+      HomePage.accountButton.click();
+      LoginPage.accountButtonMenu.should("contain.text", "demo");
     });
 
     it("Registration", () => {
