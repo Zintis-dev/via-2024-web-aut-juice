@@ -94,7 +94,7 @@ describe("Juice-shop scenarios", () => {
         HomePage.visit();
       });
 
-      it.only("Read and review", () => {
+      it("Read and review", () => {
         HomePage.searchButton.click();
         HomePage.searchField.type("King{enter}");
         HomePage.searchedProductList.contains('OWASP Juice Shop "King of the Hill"').click();
@@ -103,23 +103,17 @@ describe("Juice-shop scenarios", () => {
         HomePage.reviewContainer.should("contain.text", "K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!");
       });
 
+      it("Add a review", () => {
+        HomePage.searchButton.click();
+        HomePage.searchField.type("Raspberry{enter}");
+        HomePage.searchedProductList.contains("Raspberry Juice (1000ml)").click();
+        cy.wait(200);
+        HomePage.reviewTextField.type("Tastes like metal");
+        HomePage.reviewSubmitButton.click();
+        HomePage.reviewButton.click();
+        HomePage.reviewContainer.should("contain.text", "Tastes like metal");
+      });
     });
-
-    // Create scenario - Add a review
-    // Click on search icon
-    // Search for Raspberry
-    // Select a product card - Raspberry Juice (1000ml)
-    // Type in review - "Tastes like metal"
-    // Click Submit
-    // Click expand reviews button/icon (wait for reviews to appear)
-    // Validate review -  "Tastes like metal"
-
-    // Create scenario - Validate product card amount
-    // Validate that the default amount of cards is 12
-    // Change items per page (at the bottom of page) to 24
-    // Validate that the amount of cards is 24
-    // Change items per page (at the bottom of page) to 36
-    // Validate that the amount of cards is 35
 
     // Create scenario - Buy Girlie T-shirt
     // Click on search icon
