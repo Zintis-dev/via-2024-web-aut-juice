@@ -75,7 +75,7 @@ describe("Juice-shop scenarios", () => {
         HomePage.visit();
       });
 
-      it.only("Search 500ml", () => {
+      it("Search 500ml", () => {
         HomePage.searchButton.click();
         HomePage.searchField.type("500ml{enter}");
         HomePage.searchedProductList.contains("Eggfruit Juice (500ml)").click();
@@ -89,13 +89,21 @@ describe("Juice-shop scenarios", () => {
       });
     });
 
+    context("Review", () => {
+      beforeEach(() => {
+        HomePage.visit();
+      });
 
-    // Create scenario - Read a review
-    // Click on search icon
-    // Search for King
-    // Select a product card - OWASP Juice Shop "King of the Hill" Facemask
-    // Click expand reviews button/icon (wait for reviews to appear)
-    // Validate review - K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!
+      it.only("Read and review", () => {
+        HomePage.searchButton.click();
+        HomePage.searchField.type("King{enter}");
+        HomePage.searchedProductList.contains('OWASP Juice Shop "King of the Hill"').click();
+        cy.wait(200);
+        HomePage.reviewButton.click();
+        HomePage.reviewContainer.should("contain.text", "K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!");
+      });
+
+    });
 
     // Create scenario - Add a review
     // Click on search icon
