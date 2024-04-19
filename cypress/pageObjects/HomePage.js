@@ -52,4 +52,12 @@ export class HomePage extends BasePage {
   static get reviewContainer() {
     return cy.get("[class='mat-tooltip-trigger review-text']");
   }
+
+  static get reviewTextField() {
+    return cy.get("[aria-label='Text field to review a product']");
+  }
+
+  static get reviewSubmitButton() {
+    return cy.get("[id='submitButton']");
+  }
 }
