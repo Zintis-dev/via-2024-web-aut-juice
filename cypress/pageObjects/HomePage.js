@@ -44,4 +44,12 @@ export class HomePage extends BasePage {
   static get closeButton() {
     return cy.get("[aria-label='Close Dialog']");
   }
+
+  static get reviewButton() {
+    return cy.get("[id='mat-expansion-panel-header-0']");
+  }
+
+  static get reviewContainer() {
+    return cy.get("[class='mat-tooltip-trigger review-text']");
+  }
 }
