@@ -5,6 +5,10 @@ export class HomePage extends BasePage {
     return "/#/";
   }
 
+  static get accountButtonMenu() {
+    return cy.get("[class='mat-menu-content ng-tns-c129-2']");
+  }
+
   static get dismissButton() {
     return cy.get("[aria-label='Close Welcome Banner']");
   }

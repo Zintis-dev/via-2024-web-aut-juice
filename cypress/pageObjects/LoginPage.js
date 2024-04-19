@@ -21,7 +21,7 @@ export class LoginPage extends BasePage {
     return cy.get("[id='loginButton']");
   }
 
-  static get accountButtonMenu() {
-    return cy.get("[class='mat-menu-content ng-tns-c129-2']");
+  static get notYetACustomerButton() {
+    return cy.get("[class='primary-link']");
   }
 }
