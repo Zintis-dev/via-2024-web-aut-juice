@@ -1,5 +1,6 @@
 import { HomePage } from "../pageObjects/HomePage";
 import { LoginPage } from "../pageObjects/LoginPage";
+import { RegisterPage } from "../pageObjects/RegisterPage";
 
 describe("Juice-shop scenarios", () => {
   context("Without auto login", () => {
@@ -9,33 +10,36 @@ describe("Juice-shop scenarios", () => {
       HomePage.meWantItButton.click();
     });
 
-    it.only("Login", () => {
+    it("Login", () => {
       HomePage.accountButton.click();
       HomePage.loginButton.click();
       LoginPage.emailField.type("demo");
       LoginPage.passwordField.type("demo");
       LoginPage.loginButton.click();
       HomePage.accountButton.click();
-      LoginPage.accountButtonMenu.should("contain.text", "demo");
+      HomePage.accountButtonMenu.should("contain.text", "demo");
     });
 
     it("Registration", () => {
-      // Click Account button
-      // Login button
-      // Click "Not yet a customer?"
-      // Find - how to generate random number in JS
-      // Use that number to genarate unique email address, e.g.: email_7584@ebox.com
-      // Save that email address to some variable
-      // Fill in password field and repeat password field with same password
-      // Click on Security Question menu
-      // Select  "Name of your favorite pet?"
-      // Fill in answer
-      // Click Register button
-      // Set email value to previously created email
-      // Set password value to previously used password value
-      // Click login button
-      // Click Account button
-      // Validate that account name (with previously created email address) appears in the menu section
+
+      let email = "testEmail_" + RegisterPage.randomNumber + "@domain.com";
+      let password = "password123";
+
+      HomePage.accountButton.click();
+      HomePage.loginButton.click();
+      LoginPage.notYetACustomerButton.click();
+      RegisterPage.passwordField.type(password);
+      RegisterPage.repeatPasswordField.type(password);
+      RegisterPage.sequrityQuestionDropDown.click();
+      RegisterPage.sequrityFavoritePetQuestion.click();
+      RegisterPage.sequirityQuestionAnswerField.type("Name");
+      RegisterPage.emailField.type(email);
+      RegisterPage.registerButton.click();
+      LoginPage.emailField.type(email);
+      LoginPage.passwordField.type(password);
+      LoginPage.loginButton.click();
+      HomePage.accountButton.click();
+      HomePage.accountButtonMenu.should("contain.text", email);
     });
   });
 
