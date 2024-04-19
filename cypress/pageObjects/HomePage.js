@@ -41,4 +41,7 @@ export class HomePage extends BasePage {
     return cy.get("[class='mat-dialog-content']");
   }
   
+  static get closeButton() {
+    return cy.get("[aria-label='Close Dialog']");
+  }
 }

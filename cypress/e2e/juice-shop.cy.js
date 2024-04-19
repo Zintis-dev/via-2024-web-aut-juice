@@ -61,7 +61,7 @@ describe("Juice-shop scenarios", () => {
         HomePage.visit();
       });
 
-      it.only("Search and validate 500ml", () => {
+      it("Search and validate 500ml", () => {
         HomePage.searchButton.click();
         HomePage.searchField.type("500ml{enter}");
         HomePage.searchedProductList.contains("Lemon Juice (500ml)").click();
@@ -70,17 +70,25 @@ describe("Juice-shop scenarios", () => {
 
     });
 
-    // Create scenario - Search 500ml and validate cards
-    // Click on search icon
-    // Search for 500ml
-    // Select a product card - Eggfruit Juice (500ml)
-    // Validate that the card (should) contains "Now with even more exotic flavour."
-    // Close the card
-    // Select a product card - Lemon Juice (500ml)
-    // Validate that the card (should) contains "Sour but full of vitamins."
-    // Close the card
-    // Select a product card - Strawberry Juice (500ml)
-    // Validate that the card (should) contains "Sweet & tasty!"
+    context("Search and validate cards", () => {
+      beforeEach(() => {
+        HomePage.visit();
+      });
+
+      it.only("Search 500ml", () => {
+        HomePage.searchButton.click();
+        HomePage.searchField.type("500ml{enter}");
+        HomePage.searchedProductList.contains("Eggfruit Juice (500ml)").click();
+        HomePage.selectedProductInformation.should("contain.text", "Now with even more exotic flavour.");
+        HomePage.closeButton.click();
+        HomePage.searchedProductList.contains("Lemon Juice (500ml)").click();
+        HomePage.selectedProductInformation.should("contain.text", "Sour but full of vitamins.");
+        HomePage.closeButton.click();
+        HomePage.searchedProductList.contains("Strawberry Juice (500ml)").click();
+        HomePage.selectedProductInformation.should("contain.text", "Sweet & tasty!");
+      });
+    });
+
 
     // Create scenario - Read a review
     // Click on search icon
