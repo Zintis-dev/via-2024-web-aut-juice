@@ -40,4 +40,5 @@ export class HomePage extends BasePage {
   static get selectedProductInformation() {
     return cy.get("[class='mat-dialog-content']");
   }
+  
 }
