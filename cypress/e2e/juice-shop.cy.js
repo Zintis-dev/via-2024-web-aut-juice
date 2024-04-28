@@ -1,5 +1,10 @@
+import { BasketPage } from "../pageObjects/BasketPage";
+import { DeliveryMethodPage } from "../pageObjects/DeliveryMethodPage";
 import { HomePage } from "../pageObjects/HomePage";
 import { LoginPage } from "../pageObjects/LoginPage";
+import { OrderCompletionPage } from "../pageObjects/OrderCompletionPage";
+import { OrderSummaryPage } from "../pageObjects/OrderSummaryPage";
+import { PaymentOptionsPage } from "../pageObjects/PaymentOptionsPage";
 import { RegisterPage } from "../pageObjects/RegisterPage";
 
 describe("Juice-shop scenarios", () => {
@@ -114,7 +119,7 @@ describe("Juice-shop scenarios", () => {
         HomePage.reviewContainer.should("contain.text", "Tastes like metal");
       });
 
-      it.only("Validate product card amount", () => {
+      it("Validate product card amount", () => {
         HomePage.itemsPerPage.should("have.text", "12");
         HomePage.itemsPerPageMenu.click();
         HomePage.itemsPerPageContainer.contains("24").click();
@@ -123,23 +128,32 @@ describe("Juice-shop scenarios", () => {
         HomePage.itemsPerPageContainer.contains("36").click();
         HomePage.itemsPerPageValidation.should("contain.text", "35 of 35");
       });
-      
     });
 
-    // Create scenario - Buy Girlie T-shirt
-    // Click on search icon
-    // Search for Girlie
-    // Add to basket "Girlie"
-    // Click on "Your Basket" button
-    // Create page object - BasketPage
-    // Click on "Checkout" button
-    // Create page object - SelectAddressPage
-    // Select address containing "United Fakedom"
-    // Click Continue button
-    // Create page object - DeliveryMethodPage
-    // Select delivery speed Standard Delivery
-    // Click Continue button
-    // Create page object - PaymentOptionsPage
+    context("Product checkout", () => {
+      beforeEach(() => {
+        HomePage.visit();
+      });
+
+      it("Buy Girlie T-Shirt", () => {
+        HomePage.searchButton.click();
+        HomePage.searchField.type("Girlie{enter}");
+        HomePage.addToBasketButton.click();
+        HomePage.productBasketButton.click();
+        BasketPage.checkoutButton.click();
+        BasketPage.addressContainer.contains("United Fakedom").click();
+        BasketPage.continueButton.click();
+        DeliveryMethodPage.deliveryMethodTable.contains("Standard Delivery").click();
+        DeliveryMethodPage.continueButton.click();
+        cy.wait(200);
+        PaymentOptionsPage.cardRadioButton.click();
+        PaymentOptionsPage.continueButton.click();
+        cy.wait(200);
+        OrderSummaryPage.placeOrderButton.click();
+        OrderCompletionPage.orderConfirmation.should("contain.text", "Thank you for your purchase!");
+      });
+
+    });
     // Select card that ends with "5678"
     // Click Continue button
     // Create page object - OrderSummaryPage
