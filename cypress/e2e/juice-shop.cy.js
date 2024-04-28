@@ -1,4 +1,5 @@
 import { BasketPage } from "../pageObjects/BasketPage";
+import { CreateAddressPage } from "../pageObjects/CreateAddressPage";
 import { DeliveryMethodPage } from "../pageObjects/DeliveryMethodPage";
 import { HomePage } from "../pageObjects/HomePage";
 import { LoginPage } from "../pageObjects/LoginPage";
@@ -6,6 +7,7 @@ import { OrderCompletionPage } from "../pageObjects/OrderCompletionPage";
 import { OrderSummaryPage } from "../pageObjects/OrderSummaryPage";
 import { PaymentOptionsPage } from "../pageObjects/PaymentOptionsPage";
 import { RegisterPage } from "../pageObjects/RegisterPage";
+import { SavedAddressesPage } from "../pageObjects/SavedAddressesPage";
 
 describe("Juice-shop scenarios", () => {
   context("Without auto login", () => {
@@ -153,24 +155,32 @@ describe("Juice-shop scenarios", () => {
         OrderCompletionPage.orderConfirmation.should("contain.text", "Thank you for your purchase!");
       });
 
-    });
-    // Select card that ends with "5678"
-    // Click Continue button
-    // Create page object - OrderSummaryPage
-    // Click on "Place your order and pay"
-    // Create page object - OrderCompletionPage
-    // Validate confirmation - "Thank you for your purchase!"
+      it.only("Add address", () => {
 
-    // Create scenario - Add address
-    // Click on Account
-    // Click on Orders & Payment
-    // Click on My saved addresses
-    // Create page object - SavedAddressesPage
-    // Click on Add New Address
-    // Create page object - CreateAddressPage
-    // Fill in the necessary information
-    // Click Submit button
-    // Validate that previously added address is visible
+        var name = "Test User";
+        var county = "Latvia";
+        var number = "111 111 11";
+        var zipCode = "LV-1111";
+        var address = "Street, House number";
+        var city = "City";
+        var state = "State";
+
+        HomePage.accountButton.click();
+        HomePage.ordersAndPaymentButton.click();
+        HomePage.mySavedAddressedButton.click();
+        SavedAddressesPage.addNewAddressButton.click();
+        CreateAddressPage.countryInput.type(county);
+        CreateAddressPage.nameInput.type(name);
+        CreateAddressPage.numberInput.type(number);
+        CreateAddressPage.zipCodeInput.type(zipCode);
+        CreateAddressPage.addressInput.type(address);
+        CreateAddressPage.cityInput.type(city);
+        CreateAddressPage.stateInput.type(state);
+        CreateAddressPage.submitButton.click();
+        CreateAddressPage.addedAddressTable.contains(address + ", " + city + ", " + state + ", " + zipCode);
+      });
+
+    });
 
     // Create scenario - Add payment option
     // Click on Account
