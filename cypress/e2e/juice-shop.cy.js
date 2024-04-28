@@ -1,6 +1,13 @@
+import { BasketPage } from "../pageObjects/BasketPage";
+import { CreateAddressPage } from "../pageObjects/CreateAddressPage";
+import { DeliveryMethodPage } from "../pageObjects/DeliveryMethodPage";
 import { HomePage } from "../pageObjects/HomePage";
 import { LoginPage } from "../pageObjects/LoginPage";
+import { OrderCompletionPage } from "../pageObjects/OrderCompletionPage";
+import { OrderSummaryPage } from "../pageObjects/OrderSummaryPage";
+import { PaymentOptionsPage } from "../pageObjects/PaymentOptionsPage";
 import { RegisterPage } from "../pageObjects/RegisterPage";
+import { SavedAddressesPage } from "../pageObjects/SavedAddressesPage";
 
 describe("Juice-shop scenarios", () => {
   context("Without auto login", () => {
@@ -114,7 +121,7 @@ describe("Juice-shop scenarios", () => {
         HomePage.reviewContainer.should("contain.text", "Tastes like metal");
       });
 
-      it.only("Validate product card amount", () => {
+      it("Validate product card amount", () => {
         HomePage.itemsPerPage.should("have.text", "12");
         HomePage.itemsPerPageMenu.click();
         HomePage.itemsPerPageContainer.contains("24").click();
@@ -123,40 +130,57 @@ describe("Juice-shop scenarios", () => {
         HomePage.itemsPerPageContainer.contains("36").click();
         HomePage.itemsPerPageValidation.should("contain.text", "35 of 35");
       });
-      
     });
 
-    // Create scenario - Buy Girlie T-shirt
-    // Click on search icon
-    // Search for Girlie
-    // Add to basket "Girlie"
-    // Click on "Your Basket" button
-    // Create page object - BasketPage
-    // Click on "Checkout" button
-    // Create page object - SelectAddressPage
-    // Select address containing "United Fakedom"
-    // Click Continue button
-    // Create page object - DeliveryMethodPage
-    // Select delivery speed Standard Delivery
-    // Click Continue button
-    // Create page object - PaymentOptionsPage
-    // Select card that ends with "5678"
-    // Click Continue button
-    // Create page object - OrderSummaryPage
-    // Click on "Place your order and pay"
-    // Create page object - OrderCompletionPage
-    // Validate confirmation - "Thank you for your purchase!"
+    context("Product checkout", () => {
+      beforeEach(() => {
+        HomePage.visit();
+      });
 
-    // Create scenario - Add address
-    // Click on Account
-    // Click on Orders & Payment
-    // Click on My saved addresses
-    // Create page object - SavedAddressesPage
-    // Click on Add New Address
-    // Create page object - CreateAddressPage
-    // Fill in the necessary information
-    // Click Submit button
-    // Validate that previously added address is visible
+      it("Buy Girlie T-Shirt", () => {
+        HomePage.searchButton.click();
+        HomePage.searchField.type("Girlie{enter}");
+        HomePage.addToBasketButton.click();
+        HomePage.productBasketButton.click();
+        BasketPage.checkoutButton.click();
+        BasketPage.addressContainer.contains("United Fakedom").click();
+        BasketPage.continueButton.click();
+        DeliveryMethodPage.deliveryMethodTable.contains("Standard Delivery").click();
+        DeliveryMethodPage.continueButton.click();
+        cy.wait(200);
+        PaymentOptionsPage.cardRadioButton.click();
+        PaymentOptionsPage.continueButton.click();
+        cy.wait(200);
+        OrderSummaryPage.placeOrderButton.click();
+        OrderCompletionPage.orderConfirmation.should("contain.text", "Thank you for your purchase!");
+      });
+
+      it.only("Add address", () => {
+
+        var name = "Test User";
+        var county = "Latvia";
+        var number = "111 111 11";
+        var zipCode = "LV-1111";
+        var address = "Street, House number";
+        var city = "City";
+        var state = "State";
+
+        HomePage.accountButton.click();
+        HomePage.ordersAndPaymentButton.click();
+        HomePage.mySavedAddressedButton.click();
+        SavedAddressesPage.addNewAddressButton.click();
+        CreateAddressPage.countryInput.type(county);
+        CreateAddressPage.nameInput.type(name);
+        CreateAddressPage.numberInput.type(number);
+        CreateAddressPage.zipCodeInput.type(zipCode);
+        CreateAddressPage.addressInput.type(address);
+        CreateAddressPage.cityInput.type(city);
+        CreateAddressPage.stateInput.type(state);
+        CreateAddressPage.submitButton.click();
+        CreateAddressPage.addedAddressTable.contains(address + ", " + city + ", " + state + ", " + zipCode);
+      });
+
+    });
 
     // Create scenario - Add payment option
     // Click on Account
