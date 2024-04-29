@@ -8,6 +8,7 @@ import { OrderSummaryPage } from "../pageObjects/OrderSummaryPage";
 import { PaymentOptionsPage } from "../pageObjects/PaymentOptionsPage";
 import { RegisterPage } from "../pageObjects/RegisterPage";
 import { SavedAddressesPage } from "../pageObjects/SavedAddressesPage";
+import { SavedPaymentMethodsPage } from "../pageObjects/SavedPaymentMethodsPage";
 
 describe("Juice-shop scenarios", () => {
   context("Without auto login", () => {
@@ -155,7 +156,7 @@ describe("Juice-shop scenarios", () => {
         OrderCompletionPage.orderConfirmation.should("contain.text", "Thank you for your purchase!");
       });
 
-      it.only("Add address", () => {
+      it("Add address", () => {
 
         var name = "Test User";
         var county = "Latvia";
@@ -180,19 +181,25 @@ describe("Juice-shop scenarios", () => {
         CreateAddressPage.addedAddressTable.contains(address + ", " + city + ", " + state + ", " + zipCode);
       });
 
+      it("Add Payment Option", () => {
+
+        var name = "Name Lastname";
+        var cardNumber = "1111 1111 1111 1111";
+        var endCardDigits = cardNumber.split(" ")[3];
+
+        HomePage.accountButton.click();
+        HomePage.ordersAndPaymentButton.click();
+        HomePage.myPaymentOptionButton.click();
+        SavedPaymentMethodsPage.addAddressButton.click();
+        SavedPaymentMethodsPage.nameInput.type(name);
+        SavedPaymentMethodsPage.cardInput.type(cardNumber);
+        SavedPaymentMethodsPage.expiryMonthDropdown.select("7");
+        SavedPaymentMethodsPage.expiryYearDropdown.select("2090");
+        SavedPaymentMethodsPage.submitButton.click();
+        SavedPaymentMethodsPage.addedCardTable.contains(endCardDigits);
+      });
+
     });
 
-    // Create scenario - Add payment option
-    // Click on Account
-    // Click on Orders & Payment
-    // Click on My payment options
-    // Create page object - SavedPaymentMethodsPage
-    // Click Add new card
-    // Fill in Name
-    // Fill in Card Number
-    // Set expiry month to 7
-    // Set expiry year to 2090
-    // Click Submit button
-    // Validate that the card shows up in the list
   });
 });
